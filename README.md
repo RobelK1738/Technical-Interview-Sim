@@ -24,7 +24,6 @@ This project is a dynamic technical interview simulator built using Streamlit an
 git clone https://github.com/RobelK1738/Technical-Interview-Sim cd technical-interview-sim
 ```
 
-
 2. **Install the required Python packages:**
 
 You can install the required packages using `pip`:
@@ -32,7 +31,6 @@ You can install the required packages using `pip`:
 ```bash
 pip install -r requirements.txt
 ```
-
 
 Ensure that `streamlit` and `openai` are included in your `requirements.txt`.
 
@@ -44,7 +42,6 @@ You need an OpenAI API key to interact with the GPT model. Set it as an environm
 export OPENAI_API_KEY="your-openai-api-key"
 ```
 
-
 Replace `"your-openai-api-key"` with your actual OpenAI API key.
 
 ### Running the App
@@ -55,7 +52,6 @@ To run the Streamlit app, use the following command:
 chmod +x streamlit.py
 ./streamlit.py
 ```
-
 
 This will launch the Streamlit app in your default web browser.
 

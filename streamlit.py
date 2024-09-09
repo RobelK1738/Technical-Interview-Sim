@@ -1,4 +1,3 @@
-#!/usr/bin/env streamlit run
 import openai
 import os
 import streamlit as st

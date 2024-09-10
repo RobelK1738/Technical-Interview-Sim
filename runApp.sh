@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+pip3 install requirements.txt
+
 # Check if OPENAI_API_KEY is set
 if [ -z "$OPENAI_API_KEY" ]; then
     # If OPENAI_API_KEY is not set, export the value

@@ -82,7 +82,7 @@ def main():
             conversation_history.append({"role": "assistant", "content": dsa_prompt})
             assistant_response = ask_gpt(conversation_history)
             st.write(f"Interviewer: {assistant_response}")
-            if st.button("Move to next portion", key="move_step_5"):
+            if st.button("Move to next portion", key="move_step_4"):
                 st.session_state.step = 4
                 st.empty()
 
@@ -95,7 +95,7 @@ def main():
             assistant_response = ask_gpt(conversation_history)
             st.write(f"Interviewer: {assistant_response}")
             conversation_history.append({"role": "assistant", "content": assistant_response})
-            if st.button("Move to next portion", key="move_step_6"):
+            if st.button("Move to next portion", key="move_step_5"):
                 st.session_state.step = 5
                 st.empty()
 
@@ -121,7 +121,7 @@ def main():
             assistant_response = ask_gpt(conversation_history)
             st.write(f"Interviewer: {assistant_response}")
             conversation_history.append({"role": "assistant", "content": assistant_response})
-            if st.button("Move to next portion", key="move_step_8"):
+            if st.button("Move to next portion", key="move_step_6"):
                 st.session_state.step = 6
                 st.empty()
 
@@ -130,7 +130,7 @@ def main():
         assistant_response = ask_gpt(conversation_history)
         st.write(f"Interviewer: {assistant_response}")
         conversation_history.append({"role": "assistant", "content": assistant_response})
-        if st.button("Move to next portion", key="move_step_9"):
+        if st.button("Move to next portion", key="move_step_7"):
             st.session_state.step = 7
             st.empty()
 

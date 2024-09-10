@@ -9,4 +9,4 @@ fi
 
 # Ensure streamlit is run if the key is set
 echo "Running streamlit.py"
-streamlit run ver2.py
+streamlit run streamlit.py

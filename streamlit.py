@@ -71,7 +71,8 @@ def main():
             conversation_history.append({"role": "assistant", "content": assistant_response})
             if st.button("Move to next portion", key="move_step_2"):
                 st.session_state.step = 2
-                st.empty()
+                st.rerun()
+                
 
     if st.session_state.step == 2:
         # 2. Ice Breaker (dynamic response)
@@ -89,7 +90,8 @@ def main():
             conversation_history.append({"role": "assistant", "content": assistant_response})
             if st.button("Move to next portion", key="move_step_3"):
                 st.session_state.step = 3
-                st.empty()
+                st.rerun()
+
 
 
     if st.session_state.step == 3:
@@ -110,8 +112,8 @@ def main():
             log_message(message)
             if st.button("Move to next portion", key="move_step_4"):
                 st.session_state.step = 4
-                st.empty()
-
+                st.rerun()
+                
     if st.session_state.step == 4:
         # 4. Allow clarifying questions
         interviewee_response = st.text_input("You (ask any questions): ", key="step_5_input")
@@ -126,7 +128,7 @@ def main():
             conversation_history.append({"role": "assistant", "content": assistant_response})
             if st.button("Move to next portion", key="move_step_5"):
                 st.session_state.step = 5
-                st.empty()
+                st.rerun()
 
 
     if st.session_state.step == 5:
@@ -154,7 +156,7 @@ def main():
             conversation_history.append({"role": "assistant", "content": assistant_response})
             if st.button("Move to next portion", key="move_step_6"):
                 st.session_state.step = 6
-                st.empty()
+                st.rerun()
 
     if st.session_state.step == 6:
         # 6. Congratulation and wrap-up (dynamic response)
@@ -165,7 +167,7 @@ def main():
         conversation_history.append({"role": "assistant", "content": assistant_response})
         if st.button("Move to next portion", key="move_step_7"):
             st.session_state.step = 7
-            st.empty()
+            st.rerun()
 
     if st.session_state.step == 7:
         # 7. Final Q&A

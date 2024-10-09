@@ -1,4 +1,0 @@
-openai
-autogen
-os
-streamlit

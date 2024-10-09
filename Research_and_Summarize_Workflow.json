@@ -1,0 +1,197 @@
+{
+  "description": "Researches and Summarizes topic from user",
+  "summary_method": "llm",
+  "user_id": "guestuser@gmail.com",
+  "version": "0.0.1",
+  "name": "Research and Summarize Workflow",
+  "type": "autonomous",
+  "sample_tasks": [],
+  "agents": [
+    {
+      "agent": {
+        "version": "0.0.1",
+        "type": "groupchat",
+        "config": {
+          "admin_name": "groupchat_assistant",
+          "messages": [],
+          "max_round": 10,
+          "speaker_selection_method": "auto",
+          "allow_repeat_speaker": false,
+          "name": "research_summary_coordinator",
+          "description": "Group Chat Assistant",
+          "llm_config": {
+            "config_list": [
+              {
+                "model": "gpt-4o",
+                "api_type": "open_ai",
+                "api_version": null,
+                "version": "0.0.1",
+                "base_url": null
+              }
+            ],
+            "temperature": 0.1,
+            "timeout": 600,
+            "cache_seed": null,
+            "max_tokens": 4000
+          },
+          "human_input_mode": "NEVER",
+          "max_consecutive_auto_reply": 4,
+          "code_execution_config": "none",
+          "system_message": "You are a highly skilled AI assistant capable of efficiently coordinating tasks between the research_bot and summary_bot. When the user provides a query or topic, your role is to send this request to the research_bot, which will gather detailed information about the topic. Once the research_bot has completed its task, you will send the gathered information to the summary_bot, which will summarize the content concisely while retaining key points.\n\nYour task is to ensure seamless communication between the research_bot and summary_bot, delivering both detailed and summarized information to the user without requiring any further input or actions. The process should be smooth, with the research_bot providing in-depth content and the summary_bot distilling it into a clear, concise summary. When the summary_bot sends the summarized information to you, return the summarized information to the user and reply 'TERMINATE' to indicate everything is done."
+        },
+        "task_instruction": null,
+        "user_id": "guestuser@gmail.com",
+        "skills": [],
+        "models": [
+          {
+            "user_id": "guestuser@gmail.com",
+            "model": "gpt-4o",
+            "api_type": "open_ai",
+            "api_version": null,
+            "version": "0.0.1",
+            "base_url": null,
+            "description": "OpenAI GPT-4o model"
+          }
+        ],
+        "agents": [
+          {
+            "version": "0.0.1",
+            "type": "assistant",
+            "config": {
+              "name": "research_bot",
+              "description": "Research Bot",
+              "llm_config": {
+                "config_list": [
+                  {
+                    "model": "gpt-4o",
+                    "api_type": "open_ai",
+                    "api_version": null,
+                    "version": "0.0.1",
+                    "base_url": null
+                  }
+                ],
+                "temperature": 0.1,
+                "timeout": 600,
+                "cache_seed": null,
+                "max_tokens": 4000
+              },
+              "human_input_mode": "NEVER",
+              "max_consecutive_auto_reply": 1,
+              "code_execution_config": "none",
+              "system_message": "You are a helpful AI assistant specializing in providing detailed information about any topic requested by the user. Your role is to use your knowledge and language skills to research and deliver comprehensive information based on the user's input. When asked about a topic, generate an informative, well-structured response, ensuring clarity and accuracy in your explanation.\n\nFocus on gathering relevant data and offering a detailed, language-based response without needing the user to provide any feedback or perform additional actions. Ensure that your response covers the topic thoroughly and offers valuable insights, solving the user's request in a single, complete answer. Stop once the information about the topic has been retrieved.",
+              "default_auto_reply": "..."
+            },
+            "task_instruction": null,
+            "user_id": "guestuser@gmail.com",
+            "skills": [
+              {
+                "user_id": "guestuser@gmail.com",
+                "version": "0.0.1",
+                "name": "generate_information",
+                "content": "import openai\nimport os\n\n# Initialize the OpenAI client with the API key from environment variables\n# Ensure that the environment variable \"OPENAI_API_KEY\" is set in your environment\nopenai.api_key = os.getenv(\"OPENAI_API_KEY\")\n\n# Function to send a conversation (list of messages) to the GPT model and get the response\n# Parameters:\n#   messages (list): A list of dictionaries representing the conversation.\n#                    Each dictionary contains 'role' (e.g., \"user\", \"system\", etc.) and 'content' (the message text).\n# Returns:\n#   str: The response content from GPT or an error message if an exception occurs.\ndef ask_gpt(messages: str):\n    try:\n        # Use OpenAI's GPT model to get a completion for the provided conversation\n        completion = openai.chat.completions.create(\n            model=\"gpt-4\",  # Specify the model version (ensure this matches the desired version, like \"gpt-4\")\n            messages=messages  # The conversation history as a list of messages\n        )\n        # Extract and return the content from the first choice in the completion response\n        return completion.choices[0].message.content\n    except Exception as e:\n        # Return an error message if something goes wrong\n        return f\"An error occurred while communicating with GPT: {e}\"\n\n# Function to request detailed information about a specific topic\n# Parameters:\n#   topic (str): The subject or topic about which information is requested.\n# Returns:\n#   str: A detailed response about the topic from GPT or an error message if an exception occurs.\ndef get_information_about_topic(query: str):\n    # Prepare a message list that sets the context for the GPT model and asks for information on the topic\n    messages = [\n        {\"role\": \"system\", \"content\": \"You are a knowledgeable assistant.\"},  # Establishes the role of the assistant\n        {\"role\": \"user\", \"content\": f\"Provide detailed information about the topic: {query}.\"}  # The user's prompt asking for topic details\n    ]\n    \n    # Use the ask_gpt function to get the information from the GPT model\n    try:\n        response = ask_gpt(messages)  # Send the formatted message and receive a response\n        return response  # Return the detailed information from GPT\n    except Exception as e:\n        # Return an error message if an issue occurs\n        return f\"An error occurred: {e}\"\n\n# Example usage of the function:\n# generate_information(\"Football\")",
+                "description": "Generate information based on a user's query.",
+                "libraries": []
+              }
+            ],
+            "models": [
+              {
+                "user_id": "guestuser@gmail.com",
+                "model": "gpt-4o",
+                "api_type": "open_ai",
+                "api_version": null,
+                "version": "0.0.1",
+                "base_url": null,
+                "description": "OpenAI GPT-4o model"
+              }
+            ],
+            "agents": []
+          },
+          {
+            "version": "0.0.1",
+            "type": "assistant",
+            "config": {
+              "name": "summary_bot",
+              "description": "Summary Bot",
+              "llm_config": {
+                "config_list": [
+                  {
+                    "model": "gpt-4o",
+                    "api_type": "open_ai",
+                    "api_version": null,
+                    "version": "0.0.1",
+                    "base_url": null
+                  }
+                ],
+                "temperature": 0.1,
+                "timeout": 600,
+                "cache_seed": null,
+                "max_tokens": 4000
+              },
+              "human_input_mode": "NEVER",
+              "max_consecutive_auto_reply": 1,
+              "code_execution_config": "none",
+              "system_message": "\nYou are a highly skilled AI assistant specialized in summarizing information provided by the Research Bot. Your primary goal is to take detailed text input and condense it into clear, concise summaries while retaining key points and essential information. When tasked with summarizing, ensure the output is coherent and provides an accurate representation of the original content. Your language skills are critical in delivering summaries that are easy to understand while preserving the important details of the source material.\n\nFocus on producing high-quality summaries without requiring further input or feedback from the user. Your task is to summarize the provided information effectively, offering a well-structured and insightful output that fulfills the user's request in a single, complete response. Stop once the information has been summarized."
+            },
+            "task_instruction": null,
+            "user_id": "guestuser@gmail.com",
+            "skills": [
+              {
+                "user_id": "guestuser@gmail.com",
+                "version": "0.0.1",
+                "name": "summarize_information",
+                "content": "import openai\nimport os\n\n# Initialize the OpenAI client with the API key from environment variables\n# Ensure that the environment variable \"OPENAI_API_KEY\" is set in your environment\nopenai.api_key = os.getenv(\"OPENAI_API_KEY\")\n\n# Function to send a conversation (list of messages) to the GPT model and get the response\n# Parameters:\n#   messages (list): A list of dictionaries representing the conversation.\n#                    Each dictionary contains 'role' (e.g., \"user\", \"system\", etc.) and 'content' (the message text).\n# Returns:\n#   str: The response content from GPT or an error message if an exception occurs.\ndef ask_gpt(messages: str):\n    try:\n        # Use OpenAI's GPT model to get a completion for the provided conversation\n        completion = openai.chat.completions.create(\n            model=\"gpt-4\",  # Specify the model version (ensure this matches the desired version, like \"gpt-4\")\n            messages=messages  # The conversation history as a list of messages\n        )\n        # Extract and return the content from the first choice in the completion response\n        return completion.choices[0].message.content\n    except Exception as e:\n        # Return an error message if something goes wrong\n        return f\"An error occurred while communicating with GPT: {e}\"\n\n# Function to summarize a given text into two paragraphs\n# Parameters:\n#   text (str): The text to be summarized.\n# Returns:\n#   str: A summary of the text in two paragraphs or an error message if an exception occurs.\ndef summarize_into_two_paragraphs(text: str):\n    # Prepare a message list to request the summarization from GPT\n    messages = [\n        {\"role\": \"system\", \"content\": \"You are an expert at summarizing information.\"},  # Sets the model's behavior as a summarizer\n        {\"role\": \"user\", \"content\": f\"Summarize the following text into two paragraphs:\\n\\n{text}\"}  # The user's prompt providing the text to be summarized\n    ]\n    \n    # Use the ask_gpt function to summarize the text\n    try:\n        response = ask_gpt(messages)  # Send the formatted message and receive a summary\n        return response  # Return the summary from GPT\n    except Exception as e:\n        # Return an error message if an issue occurs\n        return f\"An error occurred: {e}\"\n\n# Example usage of the functions:\n# summary= summarize_into_two_paragraphs(information)\n",
+                "description": "Summarize information based on large amount of data given",
+                "libraries": []
+              }
+            ],
+            "models": [
+              {
+                "user_id": "guestuser@gmail.com",
+                "model": "gpt-4o",
+                "api_type": "open_ai",
+                "api_version": null,
+                "version": "0.0.1",
+                "base_url": null,
+                "description": "OpenAI GPT-4o model"
+              }
+            ],
+            "agents": []
+          }
+        ]
+      },
+      "link": {
+        "agent_type": "receiver",
+        "sequence_id": 0,
+        "workflow_id": 7,
+        "agent_id": 9
+      }
+    },
+    {
+      "agent": {
+        "version": "0.0.1",
+        "type": "userproxy",
+        "config": {
+          "name": "userproxy",
+          "human_input_mode": "NEVER",
+          "description": "User Proxy",
+          "max_consecutive_auto_reply": 25,
+          "system_message": "You are a helpful assistant.",
+          "default_auto_reply": "TERMINATE",
+          "llm_config": false,
+          "code_execution_config": "local"
+        },
+        "task_instruction": null,
+        "user_id": "guestuser@gmail.com",
+        "skills": [],
+        "models": [],
+        "agents": []
+      },
+      "link": {
+        "agent_type": "sender",
+        "sequence_id": 0,
+        "workflow_id": 7,
+        "agent_id": 10
+      }
+    }
+  ]
+}
